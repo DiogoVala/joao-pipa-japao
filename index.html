@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Goen</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Shippori+Mincho:wght@500;700;800&display=swap">
+<style>
+  /* Layout: rolo de papel washi. Hero índigo com ondas seigaiha, texto vertical e selo vermelho;
+     secções em papel com filete duplo; carimbos como cartões de goshuin com moldura dupla. */
+  :root {
+    --paper: #F1EBDC;
+    --card: #FAF6EC;
+    --ink: #1C1917;
+    --ink-2: #584F46;
+    --line: #D3C9B3;
+    --red: #B5282C;
+    --red-ink: #A8232A;
+    --btn: #B5282C;
+    --indigo: #1F2B54;
+    --on-indigo: #F1EBDC;
+    --gold: #A98A4B;
+    --tint: #EBDDD2;
+    --serif: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", Georgia, serif;
+    --sans: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #14161C; --card: #1B1E26; --ink: #ECE6D8; --ink-2: #A9A294; --line: #2E323C;
+      --red: #D9564C; --red-ink: #EE7A6E; --btn: #C23B35; --indigo: #141B3C; --gold: #C9A965; --tint: #261E22;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #14161C; --card: #1B1E26; --ink: #ECE6D8; --ink-2: #A9A294; --line: #2E323C;
+    --red: #D9564C; --red-ink: #EE7A6E; --btn: #C23B35; --indigo: #141B3C; --gold: #C9A965; --tint: #261E22;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font: 400 16px/1.65 var(--sans); -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+    background: var(--indigo); z-index: 10;
+  }
+  .wrap {
+    max-width: 1000px; margin-inline: auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  h1, h2, h3 { margin: 0; text-wrap: balance; }
+  h2 { font: 700 clamp(26px, 6vw, 34px)/1.25 var(--serif); }
+  p { margin: 0; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--red-ink); outline-offset: 3px; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  .rule { width: 72px; height: 5px; border-block: 1px solid var(--red); margin-top: 14px; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    min-height: 48px; padding: 0 24px; border-radius: 2px; border: 1px solid transparent;
+    font: 600 15px/1 var(--sans); letter-spacing: .02em; text-decoration: none; cursor: pointer;
+  }
+  .btn-primary { background: var(--btn); color: #fff; }
+  .btn-primary:hover { filter: brightness(1.1); }
+  .btn-ghost { border-color: rgba(241, 235, 220, .5); color: var(--on-indigo); background: transparent; }
+  .btn-ghost:hover { background: rgba(241, 235, 220, .1); }
+  .btn-line { border-color: var(--line); background: var(--card); color: var(--ink); min-height: 40px; padding: 0 16px; font-size: 14px; }
+  .btn-line:hover { border-color: var(--red); }
+
+  /* Hero */
+  .hero { background: var(--indigo); color: var(--on-indigo); position: relative; overflow: hidden; border-bottom: 3px double var(--gold); }
+  .waves { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 55%, #000 100%);
+            mask-image: linear-gradient(to bottom, transparent 0, #000 55%, #000 100%); }
+  .hero .wrap { position: relative; z-index: 1; padding-block: 52px 64px;
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 20px; align-items: start; }
+  .eyebrow { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; opacity: .85; }
+  .hero h1 { font: 800 clamp(76px, 23vw, 156px)/.95 var(--serif); letter-spacing: -.02em; margin-top: 16px; }
+  .slogan { font: 500 clamp(19px, 4.8vw, 26px)/1.45 var(--serif); max-width: 24ch; margin-top: 22px; }
+  .names { margin-top: 18px; font-size: 15px; opacity: .85; }
+  .actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+  .side { display: flex; flex-direction: column; align-items: center; gap: 16px; padding-top: 4px; }
+  .vert { writing-mode: vertical-rl; font: 700 clamp(34px, 9vw, 56px)/1.15 var(--serif); letter-spacing: .22em; }
+  .seal {
+    width: 52px; height: 52px; display: grid; place-items: center; flex: none;
+    background: var(--btn); color: #fff; border-radius: 4px; font: 700 28px/1 var(--serif); transform: rotate(-4deg);
+    box-shadow: inset 0 0 0 2px var(--btn), inset 0 0 0 3px rgba(255, 255, 255, .55);
+  }
+
+  /* Dados */
+  .facts { display: grid; grid-template-columns: repeat(3, 1fr); margin: 0; border-bottom: 1px solid var(--line); }
+  .facts div { padding: 20px 10px 20px 0; min-width: 0; }
+  .facts dt { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); }
+  .facts dd { margin: 4px 0 0; font: 700 clamp(16px, 4.6vw, 22px)/1.25 var(--serif); }
+
+  section { padding-block: 56px; }
+
+  /* História */
+  .story .col { display: grid; gap: 18px; max-width: 62ch; margin-top: 22px; }
+  .photo { margin: 26px 0 0; max-width: 760px; }
+  .photo img, .final img { display: block; width: 100%; height: auto; border-radius: 2px; box-shadow: 0 0 0 6px var(--card), 0 0 0 7px var(--line); }
+  .tl { list-style: none; margin: 4px 0 6px; padding: 0; max-width: 62ch; }
+  .tl li { display: grid; grid-template-columns: 84px 14px minmax(0, 1fr); gap: 14px; padding-bottom: 24px; }
+  .tl li:last-child { padding-bottom: 0; }
+  .tl .y { font: 800 20px/1.3 var(--serif); color: var(--red-ink); }
+  .tl .y small { display: block; margin-top: 2px; font: 500 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); }
+  .tl .m { position: relative; }
+  .tl .m::before { content: ""; position: absolute; left: 0; top: 8px; width: 11px; height: 11px; border: 2px solid var(--red); background: var(--paper); transform: rotate(45deg); }
+  .tl li:not(:last-child) .m::after { content: ""; position: absolute; left: 5px; top: 24px; bottom: -24px; width: 1px; background: var(--line); }
+  .tl h3 { font: 700 19px/1.35 var(--serif); }
+  .tl p { color: var(--ink-2); font-size: 15px; margin-top: 2px; }
+  .tl .ph { display: flex; gap: 10px; margin: 12px 5px 5px; }
+  .tl .ph img { display: block; flex: none; width: calc((100% - 10px) / 2); height: auto; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 2px; box-shadow: 0 0 0 4px var(--card), 0 0 0 5px var(--line); }
+  .pull { font: 700 clamp(22px, 5.4vw, 30px)/1.4 var(--serif); max-width: 22ch; margin-top: 34px; color: var(--indigo); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .pull { color: var(--ink); } }
+  :root[data-theme="dark"] .pull { color: var(--ink); }
+
+  /* Caderno */
+  .lead { color: var(--ink-2); max-width: 58ch; margin-top: 16px; }
+  .progress { margin-top: 20px; max-width: 460px; }
+  .progress .meter { height: 6px; background: var(--line); overflow: hidden; margin-top: 8px; }
+  .progress .meter i { display: block; height: 100%; background: var(--red); }
+  .progress p { font-size: 14px; color: var(--ink-2); }
+  .stamps { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 12px; grid-template-columns: 1fr; }
+  @media (min-width: 760px) { .stamps { grid-template-columns: 1fr 1fr; } }
+  .stamps li.wide { grid-column: 1 / -1; }
+  .stamp {
+    display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 14px; align-items: center;
+    width: 100%; text-align: left; padding: 16px; background: var(--card); color: inherit;
+    border: 1px solid var(--line); border-radius: 2px; font: inherit; cursor: pointer;
+    box-shadow: inset 0 0 0 3px var(--card), inset 0 0 0 4px var(--line);
+  }
+  .stamp:hover { border-color: var(--red); }
+  .stamp h3 { font: 700 17px/1.3 var(--serif); }
+  .stamp p { margin-top: 3px; font-size: 14px; line-height: 1.5; color: var(--ink-2); }
+  .price { font: 800 20px/1 var(--serif); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .hanko {
+    position: relative; width: 52px; height: 52px; border-radius: 5px; flex: none;
+    display: grid; place-items: center; border: 2px solid var(--red); color: var(--red-ink);
+    font: 700 26px/1 var(--serif); transform: rotate(var(--r, 0deg));
+  }
+  .hanko::after { content: ""; position: absolute; inset: 3px; border-radius: 2px; border: 1px solid var(--red); opacity: .45; }
+  .stamp.done .hanko { background: var(--red); color: #fff; }
+  .tag { display: inline-block; margin-top: 6px; font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--red-ink); }
+  .stamp.feature { background: var(--indigo); color: var(--on-indigo); border-color: var(--gold); padding: 20px 18px;
+    box-shadow: inset 0 0 0 3px var(--indigo), inset 0 0 0 4px var(--gold); }
+  .stamp.feature p { color: var(--on-indigo); opacity: .85; }
+  .stamp.feature { grid-template-columns: auto minmax(0, 1fr); }
+  .stamp.feature h3 { font-size: 20px; }
+  .stamp.feature .hanko { background: var(--btn); border-color: var(--btn); color: #fff; width: 58px; height: 58px; font-size: 30px; }
+  .stamp.feature .hanko::after { border-color: #fff; opacity: .55; }
+
+  /* Agradecimento */
+  .thanks { background: var(--tint); padding: 24px; display: grid; gap: 22px; box-shadow: inset 0 0 0 4px var(--tint), inset 0 0 0 5px var(--line); }
+  .thanks .t { display: grid; gap: 14px; min-width: 0; align-content: center; padding: 6px; }
+  .thanks p { max-width: 58ch; }
+  .thanks img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; object-position: 50% 55%; border-radius: 2px; }
+  @media (min-width: 760px) { .thanks { grid-template-columns: 1fr 1fr; align-items: center; gap: 32px; padding: 30px; } }
+
+  .faq { margin-top: 24px; border-top: 1px solid var(--line); max-width: 760px; }
+  details { border-bottom: 1px solid var(--line); }
+  summary { list-style: none; cursor: pointer; padding: 16px 32px 16px 0; font: 700 17px/1.4 var(--serif); position: relative; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; position: absolute; right: 4px; top: 12px; font: 400 24px/1 var(--sans); color: var(--red-ink); }
+  details[open] summary::after { content: "\2212"; }
+  details p { padding: 0 0 18px; color: var(--ink-2); max-width: 60ch; }
+
+  .final { display: grid; gap: 24px; justify-items: start; }
+  .final img { max-width: 760px; }
+  .final p { font: 500 clamp(20px, 5vw, 26px)/1.5 var(--serif); max-width: 30ch; }
+  footer { border-top: 1px solid var(--line); padding-block: 32px 112px; color: var(--ink-2); font-size: 14px; }
+  footer .wrap { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+
+  /* Botão fixo */
+  .cta {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; display: flex; justify-content: center; pointer-events: none;
+    padding: 28px max(16px, env(safe-area-inset-right, 0px)) calc(14px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+    background: linear-gradient(to top, var(--paper) 55%, transparent);
+    transition: opacity .25s, transform .25s, visibility .25s;
+  }
+  .cta .btn { pointer-events: auto; box-shadow: 0 6px 20px rgba(0, 0, 0, .22); }
+  .cta.off { opacity: 0; transform: translateY(14px); visibility: hidden; }
+
+  /* Folha de pagamento */
+  dialog {
+    border: 0; padding: 0; background: var(--card); color: var(--ink);
+    width: min(520px, calc(100% - 32px)); max-height: 90vh; max-height: 90dvh; overflow: auto; border-radius: 2px;
+    box-shadow: inset 0 0 0 4px var(--card), inset 0 0 0 5px var(--line);
+  }
+  dialog::backdrop { background: rgba(10, 12, 20, .62); }
+  @media (max-width: 600px) { dialog { margin: auto 0 0; width: 100%; max-width: 100%; } }
+  .sheet { padding: 24px 22px calc(26px + env(safe-area-inset-bottom, 0px)); display: grid; gap: 18px; }
+  .sheet-top { display: flex; gap: 16px; align-items: flex-start; }
+  .sheet-top > div { min-width: 0; flex: 1; }
+  .sheet h2 { font-size: 24px; }
+  .sheet .sug { margin-top: 6px; font-size: 14px; color: var(--ink-2); }
+  .close { margin-left: auto; flex: none; }
+  .amt-box { border: 1px solid var(--line); padding: 14px; display: grid; gap: 12px; }
+  .amt-box label { font: 600 13px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
+  .amt { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .amt input {
+    width: 130px; min-height: 52px; padding: 0 12px; text-align: right; font: 700 24px/1 var(--serif);
+    border: 1px solid var(--ink-2); border-radius: 2px; background: var(--paper); color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .amt span.eu { font: 700 24px/1 var(--serif); }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip { min-height: 36px; padding: 0 14px; border: 1px solid var(--line); background: var(--paper); color: var(--ink); border-radius: 999px; font: 600 14px/1 var(--sans); cursor: pointer; }
+  .chip:hover { border-color: var(--red); }
+  #amt-sum { font-size: 14px; color: var(--ink-2); min-height: 1.4em; }
+  .methods { display: grid; gap: 10px; }
+  .method { border: 1px solid var(--line); padding: 14px; display: grid; gap: 8px; }
+  .method h3 { font: 600 13px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
+  .row { display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+  .val { font: 600 21px/1.3 var(--sans); letter-spacing: .03em; font-variant-numeric: tabular-nums; user-select: all; overflow-wrap: anywhere; min-width: 0; }
+  .val.small { font-size: 16px; }
+  .muted { font-size: 14px; color: var(--ink-2); }
+  .note { background: var(--tint); padding: 14px; display: grid; gap: 10px; }
+  .note q { font-weight: 600; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .cta { transition: none; }
+  }
+</style>
+
+<header class="hero">
+  <svg class="waves" aria-hidden="true" focusable="false">
+    <defs>
+      <pattern id="seigaiha" width="48" height="24" patternUnits="userSpaceOnUse">
+        <g style="fill:var(--indigo);stroke:var(--on-indigo);stroke-opacity:.2;stroke-width:1">
+          <circle cx="0" cy="0" r="24"/><circle cx="0" cy="0" r="18"/><circle cx="0" cy="0" r="12"/><circle cx="0" cy="0" r="6"/>
+          <circle cx="48" cy="0" r="24"/><circle cx="48" cy="0" r="18"/><circle cx="48" cy="0" r="12"/><circle cx="48" cy="0" r="6"/>
+          <circle cx="24" cy="24" r="24"/><circle cx="24" cy="24" r="18"/><circle cx="24" cy="24" r="12"/><circle cx="24" cy="24" r="6"/>
+        </g>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#seigaiha)"/>
+  </svg>
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">A viagem dos nossos sonhos · Japão</p>
+      <h1>Goen</h1>
+      <p class="slogan">Em vez de nos oferecerem coisas, ajudem-nos a colecionar histórias.</p>
+      <p class="names" id="names"></p>
+    </div>
+    <div class="side" aria-hidden="true">
+      <div class="vert">夢の旅</div>
+      <div class="seal">縁</div>
+    </div>
+    <div class="actions">
+      <a class="btn btn-primary" href="#caderno">Escolher um carimbo</a>
+      <a class="btn btn-ghost" href="#historia">Ler a nossa história</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <dl class="facts">
+      <div><dt>Duração</dt><dd>21 dias</dd></div>
+      <div><dt>Rota</dt><dd>Tóquio, Quioto, Osaka</dd></div>
+      <div><dt>Contribuição</dt><dd>à vontade</dd></div>
+    </dl>
+  </div>
+
+  <section class="story" id="historia">
+    <div class="wrap">
+      <h2>A nossa história</h2>
+      <div class="rule"></div>
+      <figure class="photo"><img src="photos/foto-2.jpg" width="1400" height="1050" alt="Os noivos a beijarem-se num miradouro, com o mar e as montanhas ao fundo" loading="lazy" decoding="async"></figure>
+      <div class="col">
+        <p id="intro"></p>
+        <p>A nossa história começou em Coimbra, no tempo da Universidade, e deu algumas voltas até chegar aqui.</p>
+        <ol class="tl">
+          <li><span class="y">2016</span><span class="m"></span><div><h3>Coimbra</h3><p>Conhecemo-nos a trabalhar juntos numa Queima das Fitas.</p></div></li>
+          <li><span class="y">2019<small>Verão</small></span><span class="m"></span><div><h3>O reencontro</h3><p>Uma simples conversa que nunca mais acabou. Estamos juntos desde o verão desse ano.</p><div class="ph"><img src="photos/tl-reencontro.jpg" width="600" height="600" alt="Os noivos de frente um para o outro, ao pôr do sol, com uma máquina fotográfica na mesa" loading="lazy" decoding="async"></div></div></li>
+          <li><span class="y">2019<small>Setembro</small></span><span class="m"></span><div><h3>Aveiro</h3><p>A nossa primeira viagem juntos, para ver o Tim Bernardes, um dos nossos artistas favoritos.</p><div class="ph"><img src="photos/tl-aveiro.jpg" width="600" height="600" alt="Os noivos a sorrir em Aveiro, com uma casa azul de azulejos ao fundo" loading="lazy" decoding="async"></div></div></li>
+          <li><span class="y">2019<small>Fim de ano</small></span><span class="m"></span><div><h3>Marvão</h3><p>A primeira passagem de ano juntos.</p><div class="ph"><img src="photos/tl-marvao.jpg" width="600" height="600" alt="Os noivos de óculos de sol numa alameda de palmeiras" loading="lazy" decoding="async"></div></div></li>
+          <li><span class="y">2020<small>Setembro</small></span><span class="m"></span><div><h3>Costa Vicentina</h3><p>As primeiras férias juntos, a acampar.</p><div class="ph"><img src="photos/tl-costa.jpg" width="600" height="600" alt="Uma das noivas numa duna, a olhar para o cão deitado na areia, com o mar atrás" loading="lazy" decoding="async"></div></div></li>
+          <li><span class="y">2020<small>Covid</small></span><span class="m"></span><div><h3>Caldas da Rainha</h3><p>Dois confinamentos, 24 horas por dia um com o outro. Foi aí que percebemos que estávamos destinados: se aguentámos aquilo, era bom sinal.</p><div class="ph"><img src="photos/tl-covid.jpg" width="600" height="600" alt="Os noivos em casa durante o confinamento, ela deitada ao colo dele, a rir" loading="lazy" decoding="async"></div></div></li>
+          <li><span class="y">2020<small>Fim de ano</small></span><span class="m"></span><div><h3>Coimbra outra vez</h3><p>A passagem de ano de volta à nossa cidade.</p><div class="ph"><img src="photos/tl-coimbra.jpg" width="600" height="600" alt="Os noivos a rir, de gorro, com a Universidade de Coimbra ao fundo" loading="lazy" decoding="async"></div></div></li>
+          <li><span class="y">2021<small>Verão</small></span><span class="m"></span><div><h3>A nossa casa</h3><p>Comprámos casa nas Caldas da Rainha.</p><div class="ph"><img src="photos/tl-casa.jpg" width="600" height="600" alt="Os noivos de costas, junto à porta da casa nova" loading="lazy" decoding="async"></div></div></li>
+          <li><span class="y">2021<small>Setembro</small></span><span class="m"></span><div><h3>Algarve</h3><p>Férias num sítio onde a Pipa nunca tinha ido.</p><div class="ph"><img src="photos/tl-algarve.jpg" width="600" height="600" alt="Os noivos a sorrir sobre as falésias do Algarve" loading="lazy" decoding="async"></div></div></li>
+          <li><span class="y">2022<small>Outubro</small></span><span class="m"></span><div><h3>Florença e Pisa</h3><p>A nossa primeira grande viagem.</p><div class="ph two"><img src="photos/tl-florenca.jpg" width="600" height="600" alt="Os noivos a sorrir, com Florença atrás" loading="lazy" decoding="async"><img src="photos/tl-pisa.jpg" width="600" height="600" alt="Os noivos junto à Torre de Pisa" loading="lazy" decoding="async"></div></div></li>
+          <li><span class="y">2023<small>Novembro</small></span><span class="m"></span><div><h3>Barcelona</h3><div class="ph"><img src="photos/tl-barcelona.jpg" width="600" height="600" alt="Os noivos abraçados em frente à Sagrada Família" loading="lazy" decoding="async"></div></div></li>
+          <li><span class="y">2024<small>Maio</small></span><span class="m"></span><div><h3>Málaga</h3><p>Com amigos.</p><div class="ph"><img src="photos/tl-malaga.jpg" width="600" height="600" alt="Os noivos e amigos a posar em frente ao Cubo do Pompidou, em Málaga" loading="lazy" decoding="async"></div></div></li>
+          <li><span class="y">2025<small>Verão</small></span><span class="m"></span><div><h3>Tudo mudou nas nossas vidas</h3></div></li>
+          <li><span class="y">2026<small>Outubro</small></span><span class="m"></span><div><h3>Madeira</h3><p>Voltámos a viajar.</p></div></li>
+          <li><span class="y">Agora</span><span class="m"></span><div><h3>Japão</h3><p>Três semanas na viagem dos nossos sonhos.</p></div></li>
+        </ol>
+        <p>Somos muito diferentes e, mesmo assim, sempre nos entendemos bem. Uma das coisas que mais gostamos de fazer juntos é viajar, e esta é a nossa viagem de sonho.</p>
+        <p>Queremos ver Quioto de manhã cedo, antes de os turistas acordarem. Comer ramen às onze da noite num balcão com oito lugares. Dormir num futon e perdermo-nos de comboio. Três semanas a atravessar o Japão, de Tóquio a Osaka.</p>
+        <p>Não temos lista de casamento, porque o que realmente queremos não cabe numa caixa com laço. Por isso criámos este <strong>caderno de carimbos</strong>: cada contribuição é um carimbo numa experiência concreta da viagem. Quem contribui fica no nosso caderno, e nós ficamos com a certeza de que aquele momento também é seu.</p>
+        <p>E quanto é preciso? Nada. A vossa presença no casamento já é o presente maior. Se mesmo assim quiserem fazer parte desta aventura, podem dar o valor que entenderem: os valores abaixo são só uma sugestão, e há um carimbo onde escolhem a quantia. Sem pressão e sem obrigação.</p>
+        <p>Prometemos postais, fotografias e, pelo menos, uma história embaraçosa por semana.</p>
+      </div>
+      <p class="pull">Uma simples conversa que nunca mais acabou.</p>
+    </div>
+  </section>
+
+  <section id="caderno" style="padding-top:8px">
+    <div class="wrap">
+      <h2>O caderno de carimbos</h2>
+      <div class="rule"></div>
+      <p class="lead">Nos templos japoneses recolhe-se um carimbo com caligrafia, e cada página lembra um sítio onde se esteve. Escolham um carimbo, ou o primeiro, onde o valor é vosso.</p>
+      <div class="progress" id="progress" hidden>
+        <p id="progress-text"></p>
+        <div class="meter"><i id="progress-fill"></i></div>
+      </div>
+      <ol class="stamps" id="stamps"></ol>
+    </div>
+  </section>
+
+  <section style="padding-top:8px">
+    <div class="wrap">
+      <div class="thanks">
+        <img src="photos/foto-1.jpg" width="1000" height="1328" alt="Os noivos a sorrir, de óculos de sol, junto a rochas vulcânicas e ao mar" loading="lazy" decoding="async">
+        <div class="t">
+          <h2>Obrigado por fazerem parte da nossa história</h2>
+          <p>Cada carimbo vai ficar no nosso caderno e, no regresso, ganha uma fotografia e uma história. Quando estivermos num balcão em Osaka a comer takoyaki, vamos lembrar-nos de quem nos ofereceu aquele momento. Isso é mais do que qualquer torradeira conseguiria.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:8px">
+    <div class="wrap">
+      <h2>Perguntas frequentes</h2>
+      <div class="rule"></div>
+      <div class="faq">
+        <details><summary>É obrigatório contribuir?</summary><p>Não. Esta página é só um convite. A vossa presença no casamento é o que mais queremos.</p></details>
+        <details><summary>Posso escolher o valor?</summary><p>Claro. Os valores dos carimbos são só uma sugestão. No primeiro carimbo, «Valor à vossa escolha», dão o que quiserem.</p></details>
+        <details><summary>Posso oferecer um presente em vez de dinheiro?</summary><p>Podem, e vamos agradecer da mesma forma. Só queremos que saibam que a nossa prioridade são as experiências.</p></details>
+        <details><summary>Para onde vai o dinheiro?</summary><p>Para a viagem: voos, alojamento, transportes e experiências. No fim mostramos como o usámos.</p></details>
+        <details><summary>Como posso contribuir?</summary><p>Por MB WAY, Revolut, transferência bancária ou em envelope, entregue em mão a um de nós. Escolham um carimbo e aparecem os dados.</p></details>
+        <details><summary>Vou ver as fotografias?</summary><p>Sim. Vamos partilhar fotografias e enviar postais durante a viagem.</p></details>
+        <details><summary>É seguro?</summary><p>Só aceitamos contribuições de pessoas que conhecemos. Se tiverem dúvidas, liguem-nos e confirmamos tudo por telefone.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:8px">
+    <div class="wrap final">
+      <img src="photos/foto-3.jpg" width="1400" height="809" alt="Os noivos sentados a uma mesa de tronco, de frente para o mar" loading="lazy" decoding="async">
+      <p>Se chegaram até aqui, já nos fizeram sorrir. Obrigado por lerem, partilharem e serem as pessoas com quem queremos celebrar. Vemo-nos no casamento. E, depois, mostramos-vos o Japão.</p>
+      <div class="seal" aria-hidden="true" style="width:64px;height:64px;font-size:34px">縁</div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><span id="sign">Os noivos</span><span>·</span><span>Goen, um caderno de histórias</span></div>
+</footer>
+
+<div class="cta" id="cta">
+  <a class="btn btn-primary" href="#caderno">Escolher um carimbo</a>
+</div>
+
+<dialog id="sheet" aria-labelledby="sheet-title"><div class="sheet" id="sheet-body"></div></dialog>
+<div class="sr" id="live" aria-live="polite"></div>
+
+<script>
+  // Preencher antes de partilhar. Tudo o que ficar vazio é omitido ou substituído por um texto neutro.
+  var CONFIG = {
+    names: "",            // ex.: "Ana & Rui"
+    weddingDate: "",      // ex.: "12 de junho de 2027"
+    mbway: "",            // número de telemóvel, ex.: "912 345 678"
+    mbwayHolder: "",      // nome do titular
+    revolutUrl: "",       // ex.: "https://revolut.me/o-vosso-nome"
+    iban: "",             // ex.: "PT50 0000 0000 0000 0000 0000 0"
+    ibanHolder: "",
+    stamped: []           // ids dos carimbos já preenchidos, ex.: ["ramen", "cafe"]
+  };
+
+  var STAMPS = [
+    { id: "fio", k: "縁", v: 0, t: "Valor à vossa escolha", d: "Qualquer valor, quando e como quiserem. É o carimbo que cada um inventa." },
+    { id: "cafe", k: "珈", v: 5, t: "Café de máquina", d: "Um café quente de uma máquina de rua, às 7h da manhã, numa Tóquio ainda a acordar." },
+    { id: "ramen", k: "麺", v: 10, t: "Ramen ao balcão", d: "Uma tigela fumegante num balcão de oito lugares. Slurp obrigatório." },
+    { id: "konbini", k: "飯", v: 15, t: "Pequeno-almoço de konbini", d: "Onigiri e sandes de ovo de uma loja de conveniência. Sim, é tão bom como dizem." },
+    { id: "izakaya", k: "酒", v: 20, t: "Jantar de izakaya", d: "Espetadas de yakitori e uma cerveja gelada, num beco iluminado por lanternas." },
+    { id: "metro", k: "駅", v: 25, t: "Um dia de metro e cápsulas", d: "Passe de metro por Tóquio durante um dia e uma recordação de máquina de cápsulas." },
+    { id: "shinkansen", k: "新", v: 30, t: "Um troço de comboio-bala", d: "Parte do bilhete de Shinkansen rumo a Quioto, a 300 km/h e sem tremer." },
+    { id: "cha", k: "茶", v: 40, t: "Cerimónia do chá", d: "Aprender a servir e a beber chá matcha em Quioto, em silêncio e com muito respeito." },
+    { id: "fushimi", k: "朝", v: 50, t: "Amanhecer em Fushimi Inari", d: "Mil portões vermelhos antes de chegarem os turistas, e as entradas em templos do dia." },
+    { id: "onsen", k: "湯", v: 60, t: "Onsen com vista", d: "Um banho termal em Hakone, a olhar (se o tempo deixar) para o Monte Fuji." },
+    { id: "sushi", k: "寿", v: 75, t: "Sushi ao balcão", d: "Um menu de sushi feito à nossa frente, peça a peça, por um mestre que não sorri." },
+    { id: "ryokan", k: "宿", v: 100, t: "Uma noite de ryokan", d: "Dormir em tatami e futon, de quimono, numa pousada tradicional." },
+    { id: "kaiseki", k: "膳", v: 150, t: "Jantar kaiseki a dois", d: "Um jantar tradicional de vários pratos, pequenos como obras de arte." },
+    { id: "naoshima", k: "島", v: 200, t: "Dia de arte em Naoshima", d: "Ferry, museu e bicicleta numa ilha cheia de arte contemporânea." }
+  ];
+
+  function $(s) { return document.querySelector(s); }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function money(v) {
+    var r = Math.round(v * 100) / 100;
+    return r.toLocaleString("pt-PT", { minimumFractionDigits: r % 1 ? 2 : 0, maximumFractionDigits: 2 }) + " €";
+  }
+
+  // Textos que dependem da configuração
+  (function () {
+    var n = CONFIG.names.trim(), d = CONFIG.weddingDate.trim();
+    $("#names").textContent = n ? n + (d ? " · casamento a " + d : "") : (d ? "Casamento a " + d : "");
+    $("#intro").textContent = n
+      ? "Somos " + n + " e vamos casar" + (d ? " a " + d : "") + "."
+      : "Vamos casar" + (d ? " a " + d : "") + " e, depois, vamos ao Japão.";
+    $("#sign").textContent = n || "Os noivos";
+    if (CONFIG.stamped.length > 0) {
+      $("#progress").hidden = false;
+      $("#progress-text").textContent = CONFIG.stamped.length + " de " + (STAMPS.length - 1) + " carimbos no caderno";
+      $("#progress-fill").style.width = Math.round((CONFIG.stamped.length / (STAMPS.length - 1)) * 100) + "%";
+    }
+  })();
+
+  // Lista de carimbos
+  (function () {
+    var html = "";
+    STAMPS.forEach(function (s, i) {
+      var free = s.id === "fio";
+      var done = CONFIG.stamped.indexOf(s.id) !== -1;
+      var rot = ((i * 37) % 9) - 4;
+      html += '<li' + (free ? ' class="wide"' : "") + '><button type="button" class="stamp' + (free ? " feature" : "") + (done ? " done" : "") + '" data-id="' + s.id + '">' +
+        '<span class="hanko" aria-hidden="true" style="--r:' + rot + 'deg">' + s.k + '</span>' +
+        '<span style="min-width:0"><h3>' + esc(s.t) + '</h3><p>' + esc(s.d) + '</p>' +
+        (done ? '<span class="tag">Carimbado</span>' : "") + '</span>' +
+        (free ? "" : '<span class="price">' + s.v + ' €</span>') +
+        '</button></li>';
+    });
+    $("#stamps").innerHTML = html;
+  })();
+
+  // Copiar
+  function say(msg) { $("#live").textContent = ""; setTimeout(function () { $("#live").textContent = msg; }, 20); }
+  function flash(btn, ok) {
+    var old = btn.getAttribute("data-label") || btn.textContent;
+    btn.setAttribute("data-label", old);
+    btn.textContent = ok ? "Copiado" : "Selecionem e copiem";
+    say(ok ? "Copiado" : "Não foi possível copiar automaticamente");
+    setTimeout(function () { btn.textContent = old; }, 1800);
+  }
+  function fallbackCopy(text) {
+    var ok = false;
+    try {
+      var ta = document.createElement("textarea");
+      ta.value = text; ta.setAttribute("readonly", "");
+      ta.style.cssText = "position:fixed;top:0;left:0;opacity:0";
+      ($("#sheet").open ? $("#sheet") : document.body).appendChild(ta);
+      ta.select();
+      ok = document.execCommand("copy");
+      ta.remove();
+    } catch (e) { ok = false; }
+    return ok;
+  }
+  function copyText(text, btn) {
+    var done = function (ok) { flash(btn, ok); };
+    try {
+      navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(fallbackCopy(text)); });
+    } catch (e) { done(fallbackCopy(text)); }
+  }
+
+  // Folha de pagamento
+  var sheet = $("#sheet"), body = $("#sheet-body"), lastFocus = null, cur = null;
+  function methodMb() {
+    if (!CONFIG.mbway.trim()) {
+      return '<div class="method"><h3>MB WAY</h3><p class="muted">Peçam-nos o número por mensagem e enviamos já.</p></div>';
+    }
+    return '<div class="method"><h3>MB WAY</h3><div class="row"><span class="val">' + esc(CONFIG.mbway) + '</span>' +
+      '<button type="button" class="btn btn-line" data-copy="' + esc(CONFIG.mbway) + '">Copiar número</button></div>' +
+      (CONFIG.mbwayHolder ? '<p class="muted">Em nome de ' + esc(CONFIG.mbwayHolder) + '</p>' : "") + '</div>';
+  }
+  function methodRevolut() {
+    if (!/^https:\/\//.test(CONFIG.revolutUrl.trim())) return "";
+    return '<div class="method"><h3>Revolut</h3><div class="row"><span class="muted">Abre a app já com o nosso perfil.</span>' +
+      '<a class="btn btn-line" target="_blank" rel="noopener" href="' + esc(CONFIG.revolutUrl.trim()) + '">Abrir Revolut</a></div></div>';
+  }
+  function methodIban() {
+    if (!CONFIG.iban.trim()) return "";
+    return '<div class="method"><h3>Transferência bancária</h3><div class="row"><span class="val small">' + esc(CONFIG.iban) + '</span>' +
+      '<button type="button" class="btn btn-line" data-copy="' + esc(CONFIG.iban) + '">Copiar IBAN</button></div>' +
+      (CONFIG.ibanHolder ? '<p class="muted">Titular: ' + esc(CONFIG.ibanHolder) + '</p>' : "") + '</div>';
+  }
+  function updateSum() {
+    var inp = $("#amt"), out = $("#amt-sum");
+    if (!inp || !out || !cur) return;
+    var v = parseFloat(String(inp.value).replace(",", "."));
+    out.textContent = v > 0 ? money(v) + " para «" + cur.t + "». Obrigado!" : "";
+  }
+  function openSheet(id, trigger) {
+    var s = STAMPS.filter(function (x) { return x.id === id; })[0];
+    if (!s) return;
+    cur = s; lastFocus = trigger;
+    var free = s.id === "fio";
+    var sug = free ? "Qualquer valor, quando e como quiserem." : "Sugestão: " + s.v + " €. Podem dar o valor que quiserem.";
+    var chips = (free ? [10, 20, 50, 100] : [s.v, s.v * 2]).map(function (n) {
+      return '<button type="button" class="chip" data-amt="' + n + '">' + n + ' €</button>';
+    }).join("");
+    body.innerHTML =
+      '<div class="sheet-top"><span class="hanko" aria-hidden="true">' + s.k + '</span>' +
+      '<div><h2 id="sheet-title">' + esc(s.t) + '</h2><p class="sug">' + esc(sug) + '</p></div>' +
+      '<button type="button" class="btn btn-line close" data-close>Fechar</button></div>' +
+      '<p>' + esc(s.d) + '</p>' +
+      '<div class="amt-box"><label for="amt">O vosso valor</label>' +
+      '<div class="amt"><input id="amt" type="number" inputmode="decimal" min="1" step="any" placeholder="0"' + (free ? "" : ' value="' + s.v + '"') + '><span class="eu">€</span></div>' +
+      '<div class="chips">' + chips + '</div><p id="amt-sum" aria-live="polite"></p></div>' +
+      '<div class="methods">' + methodMb() + methodRevolut() + methodIban() +
+      '<div class="method"><h3>Em mão</h3><p class="muted">Num envelope, entregue em mão a um de nós. Digam-nos e combinamos.</p></div></div>' +
+      '<div class="note"><p>Na descrição do pagamento, escrevam o nome do carimbo:</p>' +
+      '<div class="row"><q>' + esc(s.t) + '</q><button type="button" class="btn btn-line" data-copy="' + esc(s.t) + '">Copiar nome</button></div></div>' +
+      '<p class="muted">Qualquer dúvida, falem connosco. Podem confirmar tudo por telefone.</p>';
+    updateSum();
+    if (sheet.showModal) { sheet.showModal(); } else { sheet.setAttribute("open", ""); }
+  }
+  function closeSheet() { if (sheet.close) { sheet.close(); } else { sheet.removeAttribute("open"); } }
+
+  document.addEventListener("click", function (e) {
+    var t = e.target;
+    var stamp = t.closest && t.closest(".stamp");
+    if (stamp) { openSheet(stamp.getAttribute("data-id"), stamp); return; }
+    var cp = t.closest && t.closest("[data-copy]");
+    if (cp) { copyText(cp.getAttribute("data-copy"), cp); return; }
+    var ch = t.closest && t.closest("[data-amt]");
+    if (ch) { $("#amt").value = ch.getAttribute("data-amt"); updateSum(); return; }
+    if (t.closest && t.closest("[data-close]")) { closeSheet(); return; }
+    if (t === sheet) { closeSheet(); }
+  });
+  document.addEventListener("input", function (e) { if (e.target && e.target.id === "amt") updateSum(); });
+  sheet.addEventListener("close", function () { if (lastFocus && lastFocus.focus) lastFocus.focus(); });
+
+  // Esconder o botão fixo quando o caderno está à vista
+  (function () {
+    var cta = $("#cta"), target = $("#caderno");
+    if (!("IntersectionObserver" in window)) return;
+    new IntersectionObserver(function (entries) {
+      cta.classList.toggle("off", entries[0].isIntersecting);
+    }, { threshold: 0.05 }).observe(target);
+  })();
+</script>
