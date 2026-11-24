@@ -1,9 +1,6 @@
 <!doctype html>
-<html lang="pt-PT">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Goen</title>
+<html lang="pt-PT"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Goen</title></head><body>
+
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Shippori+Mincho:wght@500;700;800&display=swap">
 <style>
@@ -95,7 +92,7 @@
   }
 
   /* Dados */
-  .facts { display: grid; grid-template-columns: repeat(3, 1fr); margin: 0; border-bottom: 1px solid var(--line); }
+  .facts { display: grid; grid-template-columns: repeat(2, 1fr); margin: 0; border-bottom: 1px solid var(--line); }
   .facts div { padding: 20px 10px 20px 0; min-width: 0; }
   .facts dt { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); }
   .facts dd { margin: 4px 0 0; font: 700 clamp(16px, 4.6vw, 22px)/1.25 var(--serif); }
@@ -246,7 +243,7 @@
   </svg>
   <div class="wrap">
     <div>
-      <p class="eyebrow">A viagem dos nossos sonhos · Japão</p>
+      <p class="eyebrow">Our dream trip · Japan</p>
       <h1>Goen</h1>
       <p class="slogan">Em vez de nos oferecerem coisas, ajudem-nos a colecionar histórias.</p>
       <p class="names" id="names"></p>
@@ -267,7 +264,6 @@
     <dl class="facts">
       <div><dt>Duração</dt><dd>21 dias</dd></div>
       <div><dt>Rota</dt><dd>Tóquio, Quioto, Osaka</dd></div>
-      <div><dt>Contribuição</dt><dd>à vontade</dd></div>
     </dl>
   </div>
 
@@ -278,7 +274,7 @@
       <figure class="photo"><img src="photos/foto-2.jpg" width="1400" height="1050" alt="Os noivos a beijarem-se num miradouro, com o mar e as montanhas ao fundo" loading="lazy" decoding="async"></figure>
       <div class="col">
         <p id="intro"></p>
-        <p>A nossa história começou em Coimbra, no tempo da Universidade, e deu algumas voltas até chegar aqui.</p>
+        <p>A nossa história começou em Coimbra, quando andávamos na Universidade, e deu algumas voltas até chegar aqui.</p>
         <ol class="tl">
           <li><span class="y">2016</span><span class="m"></span><div><h3>Coimbra</h3><p>Conhecemo-nos a trabalhar juntos numa Queima das Fitas.</p></div></li>
           <li><span class="y">2019<small>Verão</small></span><span class="m"></span><div><h3>O reencontro</h3><p>Uma simples conversa que nunca mais acabou. Estamos juntos desde o verão desse ano.</p><div class="ph"><img src="photos/tl-reencontro.jpg" width="600" height="600" alt="Os noivos de frente um para o outro, ao pôr do sol, com uma máquina fotográfica na mesa" loading="lazy" decoding="async"></div></div></li>
@@ -297,7 +293,9 @@
           <li><span class="y">Agora</span><span class="m"></span><div><h3>Japão</h3><p>Três semanas na viagem dos nossos sonhos.</p></div></li>
         </ol>
         <p>Somos muito diferentes e, mesmo assim, sempre nos entendemos bem. Uma das coisas que mais gostamos de fazer juntos é viajar, e esta é a nossa viagem de sonho.</p>
-        <p>Queremos ver Quioto de manhã cedo, antes de os turistas acordarem. Comer ramen às onze da noite num balcão com oito lugares. Dormir num futon e perdermo-nos de comboio. Três semanas a atravessar o Japão, de Tóquio a Osaka.</p>
+        <p>Desde sempre que temos uma enorme curiosidade pelo Japão. É um país que fascina pela sua cultura, pelas tradições, pela gastronomia, pelas paisagens e pela forma tão única como consegue juntar o passado e o futuro.</p>
+        <p>Poder conhecer de perto os templos, passear pelas ruas de Tóquio, descobrir os recantos de Quioto, experimentar a verdadeira comida japonesa e viver tudo aquilo que até agora só vimos em fotografias, é um sonho que queremos muito concretizar.</p>
+        <p>Esta viagem representa a oportunidade de conhecer uma cultura completamente diferente, sair da rotina, criar memórias inesquecíveis e viver uma experiência que vamos guardar para sempre.</p>
         <p>Não temos lista de casamento, porque o que realmente queremos não cabe numa caixa com laço. Por isso criámos este <strong>caderno de carimbos</strong>: cada contribuição é um carimbo numa experiência concreta da viagem. Quem contribui fica no nosso caderno, e nós ficamos com a certeza de que aquele momento também é seu.</p>
         <p>E quanto é preciso? Nada. A vossa presença no casamento já é o presente maior. Se mesmo assim quiserem fazer parte desta aventura, podem dar o valor que entenderem: os valores abaixo são só uma sugestão, e há um carimbo onde escolhem a quantia. Sem pressão e sem obrigação.</p>
         <p>Prometemos postais, fotografias e, pelo menos, uma história embaraçosa por semana.</p>
@@ -372,11 +370,11 @@
   var CONFIG = {
     names: "",            // ex.: "Ana & Rui"
     weddingDate: "",      // ex.: "12 de junho de 2027"
-    mbway: "",            // número de telemóvel, ex.: "912 345 678"
+    mbway: "", mbwayList: [{ n: "915017644", name: "João Vieira" }, { n: "966002322", name: "Filipa Marques" }],            // número de telemóvel, ex.: "912 345 678"
     mbwayHolder: "",      // nome do titular
     revolutUrl: "",       // ex.: "https://revolut.me/o-vosso-nome"
-    iban: "",             // ex.: "PT50 0000 0000 0000 0000 0000 0"
-    ibanHolder: "",
+    iban: "PT50 0286 0000 0047 5285 4111 7",             // ex.: "PT50 0000 0000 0000 0000 0000 0"
+    ibanHolder: "João Vieira",
     stamped: []           // ids dos carimbos já preenchidos, ex.: ["ramen", "cafe"]
   };
 
@@ -411,10 +409,9 @@
   // Textos que dependem da configuração
   (function () {
     var n = CONFIG.names.trim(), d = CONFIG.weddingDate.trim();
-    $("#names").textContent = n ? n + (d ? " · casamento a " + d : "") : (d ? "Casamento a " + d : "");
-    $("#intro").textContent = n
-      ? "Somos " + n + " e vamos casar" + (d ? " a " + d : "") + "."
-      : "Vamos casar" + (d ? " a " + d : "") + " e, depois, vamos ao Japão.";
+    $("#names").textContent = n;
+    $("#intro").textContent = n ? "Somos " + n + "." : "";
+    $("#intro").hidden = !n;
     $("#sign").textContent = n || "Os noivos";
     if (CONFIG.stamped.length > 0) {
       $("#progress").hidden = false;
@@ -472,6 +469,13 @@
   // Folha de pagamento
   var sheet = $("#sheet"), body = $("#sheet-body"), lastFocus = null, cur = null;
   function methodMb() {
+    if (CONFIG.mbwayList && CONFIG.mbwayList.length) {
+      return '<div class="method"><h3>MB WAY</h3>' + CONFIG.mbwayList.map(function (c) {
+        var f = c.n.replace(/(\d{3})(\d{3})(\d{3})/, "$1 $2 $3");
+        return '<div class="row"><div><span class="val">' + esc(f) + '</span><p class="muted">' + esc(c.name) + '</p></div>' +
+          '<button type="button" class="btn btn-line" data-copy="' + esc(c.n) + '">Copiar número</button></div>';
+      }).join("") + '</div>';
+    }
     if (!CONFIG.mbway.trim()) {
       return '<div class="method"><h3>MB WAY</h3><p class="muted">Peçam-nos o número por mensagem e enviamos já.</p></div>';
     }
@@ -546,3 +550,5 @@
     }, { threshold: 0.05 }).observe(target);
   })();
 </script>
+
+</body></html>
