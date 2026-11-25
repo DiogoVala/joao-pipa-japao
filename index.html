@@ -1,8 +1,38 @@
 <!doctype html>
-<html lang="pt-PT"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Goen</title></head><body>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Goen · A viagem de sonho da Pipa e do Gui ao Japão</title>
+<meta name="description" content="Vamos fazer a viagem dos nossos sonhos: 21 dias no Japão, entre Tóquio, Quioto e Osaka. Conheçam a nossa história e escolham um carimbo no nosso caderno.">
+<!-- Página pessoal: não aparecer no Google nem noutros motores de busca -->
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="googlebot" content="noindex, nofollow, noarchive, noimageindex">
 
-<meta name="claude:viewport-fit-sides" content="cover">
+<!-- Pré-visualização ao partilhar (WhatsApp, Facebook, Messenger…) -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_PT">
+<meta property="og:site_name" content="Goen">
+<meta property="og:url" content="https://dreamtripjapan.pt/">
+<meta property="og:title" content="A viagem de sonho da Pipa e do Gui ao Japão">
+<meta property="og:description" content="21 dias entre Tóquio, Quioto e Osaka. Conheçam a nossa história e escolham um carimbo no nosso caderno.">
+<meta property="og:image" content="https://dreamtripjapan.pt/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Goen: a Pipa e o Gui a sorrir junto ao mar, ao lado do selo vermelho 縁">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- Ícones e cor da barra do browser no telemóvel -->
+<link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48 64x64">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="Goen">
+<meta name="theme-color" content="#1F2B54" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141B3C" media="(prefers-color-scheme: dark)">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Shippori+Mincho:wght@500;700;800&display=swap">
+<script>document.documentElement.classList.add("js");</script>
 <style>
   /* Layout: rolo de papel washi. Hero índigo com ondas seigaiha, texto vertical e selo vermelho;
      secções em papel com filete duplo; carimbos como cartões de goshuin com moldura dupla. */
@@ -21,24 +51,28 @@
     --tint: #EBDDD2;
     --serif: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", Georgia, serif;
     --sans: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+    /* Grão de papel washi: ruído fino + fibras compridas, quase impercetível */
+    --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .28 0 0 0 0 .18 0 0 0 .16 -.03'/%3E%3C/filter%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.04 .5' numOctaves='1' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .45 0 0 0 0 .3 0 0 0 .4 -.25'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
       --paper: #14161C; --card: #1B1E26; --ink: #ECE6D8; --ink-2: #A9A294; --line: #2E323C;
       --red: #D9564C; --red-ink: #EE7A6E; --btn: #C23B35; --indigo: #141B3C; --gold: #C9A965; --tint: #261E22;
+      --grain: none;
       color-scheme: dark;
     }
   }
   :root[data-theme="dark"] {
     --paper: #14161C; --card: #1B1E26; --ink: #ECE6D8; --ink-2: #A9A294; --line: #2E323C;
     --red: #D9564C; --red-ink: #EE7A6E; --btn: #C23B35; --indigo: #141B3C; --gold: #C9A965; --tint: #261E22;
+    --grain: none;
     color-scheme: dark;
   }
 
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
-    margin: 0; background: var(--paper); color: var(--ink);
+    margin: 0; background: var(--paper) var(--grain); color: var(--ink);
     font: 400 16px/1.65 var(--sans); -webkit-font-smoothing: antialiased;
   }
   body::before {
@@ -86,7 +120,7 @@
   .side { display: flex; flex-direction: column; align-items: center; gap: 16px; padding-top: 4px; }
   .vert { writing-mode: vertical-rl; font: 700 clamp(34px, 9vw, 56px)/1.15 var(--serif); letter-spacing: .22em; }
   .seal {
-    width: 52px; height: 52px; display: grid; place-items: center; flex: none;
+    position: relative; width: 52px; height: 52px; display: grid; place-items: center; flex: none;
     background: var(--btn); color: #fff; border-radius: 4px; font: 700 28px/1 var(--serif); transform: rotate(-4deg);
     box-shadow: inset 0 0 0 2px var(--btn), inset 0 0 0 3px rgba(255, 255, 255, .55);
   }
@@ -222,11 +256,109 @@
   .note { background: var(--tint); padding: 14px; display: grid; gap: 10px; }
   .note q { font-weight: 600; }
 
+  /* O fio vermelho (赤い糸): 縁 é o laço que une quem está destinado a encontrar-se.
+     Na história, um único fio vermelho desenrola-se com o scroll e vai "atando" cada momento,
+     até chegar ao sol vermelho do Japão. Sem JS, fica a linha original entre os marcadores. */
+  .tl .m::before { z-index: 1; transition: background-color .35s, border-color .35s; }
+  .tl li:last-child .m::before { width: 16px; height: 16px; left: -2.5px; top: 6px; border-radius: 50%; transform: none; }
+  .js .tl { position: relative; }
+  .js .tl li:not(:last-child) .m::after { display: none; }
+  .js .tl::before, .js .tl::after {
+    content: ""; position: absolute; z-index: 0; top: var(--t0, 14px); height: var(--len, 0px); pointer-events: none;
+  }
+  .js .tl::before { left: 103px; width: 1px; background: var(--line); }
+  .js .tl::after {
+    left: 102.5px; width: 2px; border-radius: 2px; background: var(--red);
+    transform-origin: top; transform: scaleY(var(--p, 0)); transition: transform .12s linear;
+  }
+  .js .tl li.on .m::before { background: var(--red); }
+  .js .tl li:last-child.on .m::before { animation: sunrise 1.1s ease-out; }
+  @keyframes sunrise {
+    0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--red) 50%, transparent); }
+    100% { box-shadow: 0 0 0 18px color-mix(in srgb, var(--red) 0%, transparent); }
+  }
+
+  /* Despedida: o mesmo par do topo (texto vertical + selo), agora com いってきます */
+  .farewell { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 20px; align-items: end; }
+  .farewell .side { padding-top: 0; }
+  .farewell .vert { font-size: clamp(26px, 6.4vw, 34px); color: var(--red-ink); }
+  .farewell .seal { width: 64px; height: 64px; font-size: 34px; }
+  .final .gloss { font: 400 15px/1.6 var(--sans); color: var(--ink-2); max-width: 32ch; padding-bottom: 6px; }
+  .final .gloss i { font-style: normal; font-weight: 600; color: var(--ink); }
+
+  /* Tinta do carimbo: um anel que se espalha no momento em que o selo bate no papel */
+  .seal::after {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; border: 2px solid var(--btn);
+    opacity: 0; pointer-events: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    /* Entrada: o pincel escreve 夢の旅 de cima para baixo e o selo 縁 carimba no fim */
+    .js .hero .vert, .js .farewell .vert { animation: brush 1.1s cubic-bezier(.65, 0, .25, 1) .3s both; }
+    .js .hero .seal, .js .farewell .seal { animation: stamp .55s cubic-bezier(.3, 0, .2, 1) 1.3s both; }
+    .js .hero .seal::after, .js .farewell .seal::after { animation: ink .8s ease-out 1.62s both; }
+    .js .farewell:not(.in) .vert, .js .farewell:not(.in) .seal, .js .farewell:not(.in) .seal::after { animation-play-state: paused; }
+
+    /* Folha de pagamento: sobe suavemente e o carimbo escolhido é "batido" */
+    dialog[open] { animation: rise .3s cubic-bezier(.2, .8, .2, 1); }
+    dialog[open]::backdrop { animation: fade .3s ease-out; }
+    dialog[open] .sheet-top .hanko { animation: hanko .5s cubic-bezier(.3, 0, .2, 1) .12s both; }
+  }
+  @keyframes brush { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0); } }
+  @keyframes stamp {
+    0% { opacity: 0; transform: translateY(-10px) scale(1.8) rotate(-16deg); }
+    55% { opacity: 1; transform: scale(.9) rotate(-3deg); }
+    100% { opacity: 1; transform: scale(1) rotate(-4deg); }
+  }
+  @keyframes ink { 0% { opacity: .75; transform: scale(1); } 100% { opacity: 0; transform: scale(1.75); } }
+  @keyframes hanko {
+    0% { opacity: 0; transform: scale(1.7) rotate(-14deg); }
+    55% { opacity: 1; transform: scale(.92) rotate(2deg); }
+    100% { opacity: 1; transform: none; }
+  }
+  /* Caderno: cada carimbo cai do alto e é batido no papel quando entra no ecrã.
+     O carimbo desce em aceleração (gravidade), bate, espalha um anel de tinta e o cartão
+     cede um pouco com o impacto. Só é escondido quando o JS confirma que vai animar. */
+  .stamp .hanko::before {
+    content: ""; position: absolute; inset: -3px; border-radius: 8px; border: 2px solid var(--btn);
+    opacity: 0; pointer-events: none;
+  }
+  .stamp.pending .hanko { opacity: 0; }
+  .stamp.stamped .hanko { animation: drop .62s var(--d, 0s) both; }
+  .stamp.stamped .hanko::before { animation: ink .75s calc(var(--d, 0s) + .42s) ease-out both; }
+  .stamp.stamped { animation: thud .34s calc(var(--d, 0s) + .4s) ease-out both; }
+  @keyframes drop {
+    0% {
+      opacity: 0; transform: translateY(-34px) scale(2.4) rotate(calc(var(--r, 0deg) - 18deg));
+      filter: drop-shadow(0 26px 14px rgba(28, 25, 23, .3));
+      animation-timing-function: cubic-bezier(.5, 0, .9, .45);
+    }
+    14% { opacity: 1; }
+    68% {
+      transform: translateY(0) scale(.88) rotate(var(--r, 0deg));
+      filter: drop-shadow(0 0 0 rgba(28, 25, 23, 0));
+      animation-timing-function: cubic-bezier(.2, .7, .3, 1);
+    }
+    84% { transform: scale(1.05) rotate(var(--r, 0deg)); }
+    100% { opacity: 1; transform: rotate(var(--r, 0deg)); filter: none; }
+  }
+  @keyframes thud {
+    0%, 100% { transform: none; }
+    30% { transform: translateY(2px) scale(.992); }
+  }
+
+  @keyframes rise { from { opacity: 0; transform: translateY(28px); } }
+  @keyframes fade { from { opacity: 0; } }
+
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .cta { transition: none; }
+    .js .tl::after { transition: none; }
+    .stamp.pending .hanko { opacity: 1; }
   }
 </style>
+</head>
+<body>
 
 <header class="hero">
   <svg class="waves" aria-hidden="true" focusable="false">
@@ -353,7 +485,13 @@
     <div class="wrap final">
       <img src="photos/foto-3.jpg" width="1400" height="809" alt="O casal sentados a uma mesa de tronco, de frente para o mar" loading="lazy" decoding="async">
       <p>Se chegaram até aqui, já nos fizeram sorrir. Obrigado por lerem e por partilharem. No regresso, contamos-vos tudo, com fotografias e histórias.</p>
-      <div class="seal" aria-hidden="true" style="width:64px;height:64px;font-size:34px">縁</div>
+      <div class="farewell" id="farewell">
+        <div class="side" aria-hidden="true">
+          <div class="vert" lang="ja">いってきます</div>
+          <div class="seal">縁</div>
+        </div>
+        <p class="gloss"><i>Itte kimasu.</i> No Japão, é o que se diz ao sair de casa: «vamos e já voltamos».</p>
+      </div>
     </div>
   </section>
 </main>
@@ -439,6 +577,27 @@
         '</button></li>';
     });
     $("#stamps").innerHTML = html;
+  })();
+
+  // Carimbar ao fazer scroll: os carimbos que entram juntos no ecrã caem um a seguir ao outro
+  (function () {
+    var still = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (still || !("IntersectionObserver" in window)) return;
+    var cards = [].slice.call(document.querySelectorAll("#stamps .stamp"));
+    cards.forEach(function (c) { c.classList.add("pending"); });
+    var io = new IntersectionObserver(function (entries) {
+      entries
+        .filter(function (e) { return e.isIntersecting; })
+        .map(function (e) { return e.target; })
+        .sort(function (a, b) { return cards.indexOf(a) - cards.indexOf(b); })
+        .forEach(function (c, k) {
+          io.unobserve(c);
+          c.style.setProperty("--d", (k * 0.14).toFixed(2) + "s");
+          c.classList.remove("pending");
+          c.classList.add("stamped");
+        });
+    }, { threshold: 0.65, rootMargin: "0px 0px -6% 0px" });
+    cards.forEach(function (c) { io.observe(c); });
   })();
 
   // Copiar
@@ -544,6 +703,56 @@
   });
   document.addEventListener("input", function (e) { if (e.target && e.target.id === "amt") updateSum(); });
   sheet.addEventListener("close", function () { if (lastFocus && lastFocus.focus) lastFocus.focus(); });
+
+  // O fio vermelho da história: cresce com o scroll e "ata" cada momento por onde passa
+  (function () {
+    var tl = $(".tl");
+    if (!tl) return;
+    var items = [].slice.call(tl.children);
+    var marks = items.map(function (li) { return li.querySelector(".m"); });
+    var still = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)");
+    var t0 = 0, len = 0, pos = [], queued = false;
+
+    function measure() {
+      var top = tl.getBoundingClientRect().top;
+      pos = marks.map(function (m) { return m.getBoundingClientRect().top - top + 14; });
+      t0 = pos[0];
+      len = Math.max(1, pos[pos.length - 1] - t0);
+      tl.style.setProperty("--t0", t0 + "px");
+      tl.style.setProperty("--len", len + "px");
+      update();
+    }
+    function update() {
+      queued = false;
+      var p = 1;
+      if (!(still && still.matches)) {
+        // a ponta do fio acompanha uma linha a ~60% da altura do ecrã
+        var tip = window.innerHeight * 0.6 - tl.getBoundingClientRect().top;
+        p = Math.min(1, Math.max(0, (tip - t0) / len));
+      }
+      tl.style.setProperty("--p", p.toFixed(4));
+      var reach = t0 + p * len + 1;
+      items.forEach(function (li, i) { li.classList.toggle("on", pos[i] <= reach); });
+    }
+    window.addEventListener("scroll", function () {
+      if (!queued) { queued = true; requestAnimationFrame(update); }
+    }, { passive: true });
+    window.addEventListener("resize", measure);
+    if ("ResizeObserver" in window) new ResizeObserver(measure).observe(tl);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+    measure();
+  })();
+
+  // Despedida: o selo final só carimba quando aparece no ecrã
+  (function () {
+    var f = $("#farewell");
+    if (!f) return;
+    if (!("IntersectionObserver" in window)) { f.classList.add("in"); return; }
+    var io = new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting) { f.classList.add("in"); io.disconnect(); }
+    }, { threshold: 0.6 });
+    io.observe(f);
+  })();
 
   // Esconder o botão fixo quando o caderno está à vista
   (function () {
